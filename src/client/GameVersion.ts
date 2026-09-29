@@ -90,7 +90,9 @@ const NAV_VERSION_SELECTOR = "#game-version, .game-version-display";
  */
 export function renderNavVersion(root: ParentNode = document): number {
   const elements = root.querySelectorAll(NAV_VERSION_SELECTOR);
-  const label = taggedGameVersion(version);
+  // const label = taggedGameVersion(version);
+  const label = "Saltibot";
+
   elements.forEach((el) => {
     (el as HTMLElement).style.fontFamily = '"OpenFront", Inter, sans-serif';
     el.textContent = label;

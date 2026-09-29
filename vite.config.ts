@@ -414,6 +414,9 @@ export default defineConfig(({ mode }) => {
       assetsDir: "assets", // Sub-directory for assets
       rollupOptions: {
         output: {
+          entryFileNames: "assets/index.js",
+          chunkFileNames: "assets/[name].js",
+          assetFileNames: "assets/[name][extname]",
           manualChunks: (id) => {
             const vendorModules = ["howler", "zod"];
             if (vendorModules.some((module) => id.includes(module))) {
