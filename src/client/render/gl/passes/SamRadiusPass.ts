@@ -183,6 +183,7 @@ export class SAMRadiusPass {
   private colorMode: "perspective" | "owner" = "perspective";
   private allianceClusters: Map<number, number> = new Map();
   private lastStructures: Map<number, UnitState> | null = null;
+  private fullCircles = true;
 
   constructor(
     gl: WebGL2RenderingContext,
@@ -281,6 +282,12 @@ export class SAMRadiusPass {
 
   setAllianceClusters(clusters: Map<number, number>): void {
     this.allianceClusters = clusters;
+  }
+
+  setFullCircles(v: boolean): void {
+      if (v === this.fullCircles) return;
+      this.fullCircles = v;
+      this.rebuild();
   }
 
   setTick(tick: number): void {
@@ -499,7 +506,9 @@ export class SAMRadiusPass {
 
       for (let i = 0; i < groupCircles.length; i++) {
         const c = groupCircles[i];
-        const arcs = computeUncoveredArcs(c, groupCircles);
+        const arcs: Interval[] = this.fullCircles
+                  ? [[0, TWO_PI]]
+                  : computeUncoveredArcs(c, groupCircles);
         for (let j = 0; j < arcs.length; j++) {
           const [arcStart, arcEnd] = arcs[j];
           this.instanceBuf.ensureCapacity(count + 1);
@@ -519,7 +528,7 @@ export class SAMRadiusPass {
         }
       }
     }
-
+    console.log("SAM instances:", count, "circles:", circles.length, "full:", this.fullCircles);
     this.instanceCount = count;
     if (count > 0) {
       const gl = this.gl;
