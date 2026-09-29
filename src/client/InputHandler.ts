@@ -1124,7 +1124,7 @@ export class InputHandler {
       ghostStructure !== null
     ) {
       this.uiState.upgradeMultiplier =
-        this.uiState.upgradeMultiplier === 1 ? 5 : 1;
+        this.uiState.upgradeMultiplier === 1 ? 50 : 1;
     } else {
       this.uiState.upgradeMultiplier = 1;
       this.uiState.ghostStructure = ghostStructure;
